@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-api
+  namespace: maialenigar-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-api
+  template:
+    metadata:
+      labels:
+        app: web-api
+    spec:
+      containers:
+      - name: web-api
+        image: maialenigar/web_api:v2
+        ports:
+        - containerPort: 7007
+          protocol: TCP
+        env:
+        - name: MONGO_URI
+          value: "mongodb://mongodb:27017/testdb"
+        resources:
+          limits:
+            cpu: "500m" # 0.5 CPU
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-api
+  namespace: maialenigar-namespace
+spec:
+  selector:
+    app: web-api
+  ports:
+  - protocol: TCP
+    port: 7007
+    targetPort: 7007

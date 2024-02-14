@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-configmap
+  namespace: maialenigar-namespace
+data:
+  MONGO_INITDB_ROOT_USERNAME: root
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb-secret
+  namespace: maialenigar-namespace
+type: Opaque
+stringData:
+  MONGO_INITDB_ROOT_PASSWORD: password
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+  namespace: maialenigar-namespace
+spec:
+  serviceName: mongodb
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:4.0.7
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        volumeMounts:
+        - name: mongodb-data
+          mountPath: /data/db
+        envFrom:
+        - configMapRef:
+            name: mongodb-configmap
+      volumes:
+      - name: mongodb-data
+        emptyDir: {}
+      - name: mongodb-secret-volume
+        secret:
+          secretName: mongodb-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: maialenigar-namespace
+spec:
+  selector:
+    app: mongodb
+  ports:
+  - protocol: TCP
+    port: 27017
+    targetPort: 27017
