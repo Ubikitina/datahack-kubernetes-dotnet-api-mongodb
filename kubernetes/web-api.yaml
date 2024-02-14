@@ -14,7 +14,7 @@ spec:
     - name: Entorno
       value: "maialenigar"
     - name: Mongodb
-      value: "mongodb://10.106.18.113:27017"
+      value: "mongodb://root:password@10.102.141.79:27017"
 ---
 apiVersion: v1
 kind: Service
