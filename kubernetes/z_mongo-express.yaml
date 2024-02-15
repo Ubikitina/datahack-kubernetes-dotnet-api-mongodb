@@ -1,17 +1,8 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mongo-express-secret
-  namespace: maialenigar-namespace
-type: Opaque
-stringData:
-  ME_CONFIG_MONGODB_ADMINPASSWORD: password
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo-express
-  namespace: maialenigar-namespace
+  namespace: maialen-namespace
 spec:
   replicas: 1
   selector:

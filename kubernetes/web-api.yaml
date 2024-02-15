@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web-api-deployment
+  namespace: maialen-namespace
 spec:
   replicas: 1
   selector:
@@ -21,12 +22,13 @@ spec:
         - name: Entorno
           value: "maialenigar"
         - name: Mongodb
-          value: "mongodb://root:password@10.103.113.184:27017"
+          value: "mongodb://root:password@10.105.227.212:27017"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: web-api-service
+  namespace: maialen-namespace
 spec:
   selector:
     app: web-api

@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo-express-deployment
+  namespace: maialen-namespace
 spec:
   replicas: 1
   selector:
@@ -39,6 +40,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mongo-express-service
+  namespace: maialen-namespace
 spec:
   selector:
     app: mongo-express
