@@ -16,6 +16,9 @@ spec:
       containers:
       - name: mongodb
         image: mongo:4.0.7
+        volumeMounts:
+        - mountPath: /data/db 
+          name: mongo-data
         env:
           - name: MONGO_INITDB_ROOT_USERNAME
             valueFrom:
@@ -29,6 +32,10 @@ spec:
                 key: mongo-root-password
         ports:
         - containerPort: 27017
+      volumes:
+      - name: mongo-data
+        persistentVolumeClaim:
+          claimName: mongo-data-pvc
 ---
 apiVersion: v1
 kind: Service
