@@ -22,7 +22,11 @@ spec:
         - name: Entorno
           value: "maialenigar"
         - name: Mongodb
-          value: "mongodb://root:password@10.96.138.182:27017"
+          value: "mongodb://root:password@10.100.186.15:27017"
+        resources:
+          limits:
+            cpu: "500m" # 0.5 CPU cores
+            memory: "256Mi" # 256 megabytes
 ---
 apiVersion: v1
 kind: Service
